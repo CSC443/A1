@@ -5,11 +5,6 @@
 
 //void csv_to_csv(char* filename);
 
-// int main(int argc, char *atgv[]){
-// 	printf("start\n");
-// 	csv_to_csv(atgv[1]);
-// }
-
 void csv_to_csv(char* filename){
 	FILE *fp, *output;
 	char current_line[MAX_CHARS_PER_LINE];
@@ -22,6 +17,7 @@ void csv_to_csv(char* filename){
 		return;
 	}
 	//Parse the lines in csv file to an array of array chars
+
 	while((line = fgets(current_line, MAX_CHARS_PER_LINE, fp)) != NULL){
 		//line [strcspn (line, "\r\n")] = '\0';
 		printf("%s\n", line);
@@ -33,3 +29,8 @@ void csv_to_csv(char* filename){
 	fclose (fp);
 
 }
+
+int main(int argc, char *atgv[]){
+ 	printf("start\n");
+ 	csv_to_csv(atgv[1]);
+ }
