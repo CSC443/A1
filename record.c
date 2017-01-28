@@ -75,14 +75,10 @@ void csv_to_record(char* filename, char* block_size){
 	
 	free(buffer);
 	fclose (fp);
+	fclose (fp_write);
 
 }
 
-// void write_record_to_buffer(Record* buffer, Record* record, int buffer_pointer){
-// 	memcpy(buffer[buffer_pointer], &record, sizeof(record));
-// 	free(record);
-
-// }
 
 void write_buffer_to_disk(Record* buffer, int total_records, FILE *fp){
 
