@@ -19,6 +19,7 @@ void csv_to_record(char* filename, char* block_size){
 		perror("Error opening file");
 		return;
 	}
+	printf("%lu\n", sizeof(Record));
 	
 	int file = 0;
 	int i = 0;
@@ -29,7 +30,6 @@ void csv_to_record(char* filename, char* block_size){
 		line [strcspn (line, "\r\n")] = '\0';
 		printf("%s\n", line);
 		char *attr = strtok(line, ",");
-		//Record *record = malloc(sizeof(struct record));
 		int j = 0;
 		while(attr){
 
@@ -44,7 +44,7 @@ void csv_to_record(char* filename, char* block_size){
 		}
 		i++;
 		total_records++;
-		if(i == records_per_block - 1){
+		if(i == records_per_block){
 			write_buffer_to_disk(buffer, records_per_block, file, filename);
 			file++;
 			i = 0;
@@ -52,6 +52,9 @@ void csv_to_record(char* filename, char* block_size){
 		}
 		
 
+	}
+	if(file == 0){
+		write_buffer_to_disk(buffer, i*sizeof(Record), file, filename);
 	}
     ftime(&t_end); 
 
@@ -61,9 +64,7 @@ void csv_to_record(char* filename, char* block_size){
 	printf ("Data rate: %.3f MBPS\n", ((total_records*sizeof(Record))/(float)time_spent_ms * 1000)/MB);
 	printf("total records: %d\n",(total_records));	
 
-	if(file == 0){
-		write_buffer_to_disk(buffer, i*sizeof(Record), file, filename);
-	}
+	
 	free(buffer);
 	fclose (fp);
 

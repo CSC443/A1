@@ -26,23 +26,29 @@ int main(int argc, char *atgv[]){
 		return -1;
 	}
 	int pointer = 0;
-	int current_max_id = buffer[pointer].uid1;
-	int current_max_followers = 1;
+	int current_max_id = -1;
+	int current_max_followers = 0;
 	int previous_max_id = -1;
 	int previous_max_followers = -1;
-	int id_count = 1;
-	int record_count = 1;
+	int id_count = 0;
+	int record_count = 0;
 	while(pointer < records_per_block){
 
-		pointer++;
+		
 		if(buffer[pointer].uid1 == 0){
-			continue;
+			pointer++;
+			break;
 		}
 		record_count++;
 		printf("uid1 %d\n", buffer[pointer].uid1);
-		
+		if(current_max_id == -1){
 
-		if(current_max_id == buffer[pointer].uid1){
+			current_max_id = buffer[pointer].uid1;
+			current_max_followers = 1;
+			previous_max_followers = current_max_followers;
+			previous_max_id = current_max_id;
+			id_count++;
+		}else if(current_max_id == buffer[pointer].uid1){
 			current_max_followers++;
 		}else{
 			if(previous_max_followers < current_max_followers && previous_max_id != current_max_id){
@@ -53,7 +59,7 @@ int main(int argc, char *atgv[]){
 			current_max_followers = 1;
 			id_count++;
 		}
-		
+		pointer++;
 		
 	}
     ftime(&t_end);
