@@ -30,8 +30,8 @@ int main(int argc, char *atgv[]){
 	int current_max_followers = 1;
 	int previous_max_id = -1;
 	int previous_max_followers = -1;
-	int id_count = 0;
-	int record_count = 0;
+	int id_count = 1;
+	int record_count = 1;
 	while(pointer < records_per_block){
 
 		pointer++;
@@ -61,7 +61,7 @@ int main(int argc, char *atgv[]){
        + (t_end.millitm - t_begin.millitm));
     printf ("Data rate: %.3f MBPS\n", ((pointer*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
 	printf ("total records: %d\n", (record_count));
-	printf("%d, %d\n", previous_max_followers, id_count);
+	printf("uid with max followers %d, total number of uid %d, avg %.3f\n", previous_max_followers, id_count, record_count/(float)id_count);
 	
 	fclose (fp_read);
 	free (buffer);
