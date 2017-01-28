@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/timeb.h>
 #include "record.h"
 
 void csv_to_record(char* filename, char* block_size){
+	struct timeb t_begin, t_end;
+	long time_spent_ms;
 	FILE *fp;
 	char current_line[MAX_CHARS_PER_LINE];
 	char *line;
@@ -20,6 +23,8 @@ void csv_to_record(char* filename, char* block_size){
 	int file = 0;
 	int i = 0;
 	//Parse the lines in csv file to an array of array chars
+	int total_records = 0;
+    ftime(&t_begin); 
 	while((line = fgets(current_line, MAX_CHARS_PER_LINE, fp)) != NULL){
 		line [strcspn (line, "\r\n")] = '\0';
 		printf("%s\n", line);
@@ -38,6 +43,7 @@ void csv_to_record(char* filename, char* block_size){
 			j++;
 		}
 		i++;
+		total_records++;
 		if(i == records_per_block - 1){
 			write_buffer_to_disk(buffer, records_per_block, file, filename);
 			file++;
@@ -45,9 +51,15 @@ void csv_to_record(char* filename, char* block_size){
 
 		}
 		
-		
 
 	}
+    ftime(&t_end); 
+
+	time_spent_ms = (long) (1000 *(t_end.time - t_begin.time)
+     + (t_end.millitm - t_begin.millitm));
+
+	printf ("Data rate: %.3f MBPS\n", ((total_records*sizeof(Record))/(float)time_spent_ms * 1000)/MB);
+	printf("total records: %d\n",(total_records));	
 
 	if(file == 0){
 		write_buffer_to_disk(buffer, i*sizeof(Record), file, filename);
