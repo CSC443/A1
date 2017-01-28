@@ -7,18 +7,26 @@
 void csv_to_record(char* filename, char* block_size){
 	struct timeb t_begin, t_end;
 	long time_spent_ms;
-	FILE *fp;
+	FILE *fp, *fp_write;
 	char current_line[MAX_CHARS_PER_LINE];
 	char *line;
 	int records_per_block = atoi(block_size) / sizeof(Record);
 	Record *buffer = (Record *) calloc (records_per_block, sizeof (Record));
 	int buffer_pointer = 0;
 	printf("%s\n", filename);
+
 	fp = fopen(filename, "r");
 	if(fp == NULL){
 		perror("Error opening file");
 		return;
 	}
+
+	fp_write = fopen("data.dat", "wb");
+	if(fp_write == NULL){
+		perror("Error opening file");
+		return;
+	}
+
 	printf("%lu\n", sizeof(Record));
 	
 	int file = 0;
@@ -45,7 +53,7 @@ void csv_to_record(char* filename, char* block_size){
 		i++;
 		total_records++;
 		if(i == records_per_block){
-			write_buffer_to_disk(buffer, records_per_block, file, filename);
+			write_buffer_to_disk(buffer, records_per_block, fp_write);
 			file++;
 			i = 0;
 
@@ -54,7 +62,7 @@ void csv_to_record(char* filename, char* block_size){
 
 	}
 	if(file == 0){
-		write_buffer_to_disk(buffer, i, file, filename);
+		write_buffer_to_disk(buffer, total_records, fp_write);
 	}
     ftime(&t_end); 
 
@@ -76,25 +84,14 @@ void csv_to_record(char* filename, char* block_size){
 
 // }
 
-void write_buffer_to_disk(Record* buffer, int total_records, int filenum, char* orginal_filename){
-	FILE *fp;
-	char fileName[100];
-	char fileNumber[sizeof(int) + 1];
-	fileName[0] = '\0'; 
-    fileNumber[0] = '\0';
-  	char *attr = strtok(orginal_filename, ".");
-    snprintf(fileNumber, sizeof(int), "%d", filenum);
-  	strncpy(fileName, attr, strlen(attr) + 1);
-    strncat(fileName, 0, strlen(fileNumber));
+void write_buffer_to_disk(Record* buffer, int total_records, FILE *fp){
 
-	fp = fopen(fileName, "wb");
 	if(fp){
 		fwrite(buffer, sizeof(Record), total_records, fp);
 		fflush (fp);
 	}else{
 		return;
 	}
-	fclose(fp);
 
 }
 
