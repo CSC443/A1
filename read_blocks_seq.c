@@ -40,7 +40,7 @@ int main(int argc, char *atgv[]){
 			break;
 		}
 		record_count++;
-		printf("uid1 %d\n", buffer[pointer].uid1);
+		printf("uid1 %d   uid2 %d\n", buffer[pointer].uid1, buffer[pointer].uid2);
 		if(current_max_id == -1){
 
 			current_max_id = buffer[pointer].uid1;
