@@ -43,6 +43,7 @@ int main(int argc, char *atgv[]){
 	int record_count = 0;
 	while(pointer < records_per_block){
 
+
 		
 		if(buffer[pointer].uid1 == 0){
 			break;
