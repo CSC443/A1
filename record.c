@@ -54,7 +54,7 @@ void csv_to_record(char* filename, char* block_size){
 
 	}
 	if(file == 0){
-		write_buffer_to_disk(buffer, i*sizeof(Record), file, filename);
+		write_buffer_to_disk(buffer, i, file, filename);
 	}
     ftime(&t_end); 
 
