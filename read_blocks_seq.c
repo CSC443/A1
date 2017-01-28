@@ -20,47 +20,53 @@ int main(int argc, char *atgv[]){
 	struct timeb t_begin, t_end;
     long time_spent_ms;
     ftime(&t_begin);
-	int result = fread (buffer, sizeof(Record), records_per_block, fp_read);
-
-	if (result!=records_per_block){
-		return -1;
-	}
-	int pointer = 0;
+	int result = 0;
+	
 	int current_max_id = -1;
 	int current_max_followers = 0;
 	int previous_max_id = -1;
 	int previous_max_followers = -1;
 	int id_count = 0;
 	int record_count = 0;
-	while(pointer < records_per_block){
+	while((result = fread (buffer, sizeof(Record), records_per_block, fp_read)) > 0){
+		int pointer = 0;
+		if (result!=records_per_block){
+			records_per_block = result;
+		}
+		while(pointer < records_per_block){
 
-		record_count++;
-		printf("uid1 %d   uid2 %d\n", buffer[pointer].uid1, buffer[pointer].uid2);
-		if(current_max_id == -1){
+			record_count++;
+			printf("uid1 %d   uid2 %d\n", buffer[pointer].uid1, buffer[pointer].uid2);
+			if(current_max_id == -1){
 
-			current_max_id = buffer[pointer].uid1;
-			current_max_followers = 1;
+				current_max_id = buffer[pointer].uid1;
+				current_max_followers = 1;
+				// previous_max_followers = current_max_followers;
+				// previous_max_id = current_max_id;
+				id_count++;
+			}else if(current_max_id == buffer[pointer].uid1){
+				current_max_followers++;
+			}else{
+				if(previous_max_followers < current_max_followers && previous_max_id != current_max_id){
+					previous_max_followers = current_max_followers;
+					previous_max_id = current_max_id;
+				}
+				current_max_id = buffer[pointer].uid1;
+				current_max_followers = 1;
+				id_count++;
+			}
+			pointer++;
+			
+		}
+		if(previous_max_id == -1){
 			previous_max_followers = current_max_followers;
 			previous_max_id = current_max_id;
-			id_count++;
-		}else if(current_max_id == buffer[pointer].uid1){
-			current_max_followers++;
-		}else{
-			if(previous_max_followers < current_max_followers && previous_max_id != current_max_id){
-				previous_max_followers = current_max_followers;
-				previous_max_id = current_max_id;
-			}
-			current_max_id = buffer[pointer].uid1;
-			current_max_followers = 1;
-			id_count++;
 		}
-		pointer++;
-		
 	}
     ftime(&t_end);
     time_spent_ms = (long) (1000 *(t_end.time - t_begin.time)
        + (t_end.millitm - t_begin.millitm));
-    printf ("Data rate: %.3f MBPS\n", ((pointer*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
+    printf ("Data rate: %.3f MBPS\n", ((record_count*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
 	printf ("total records: %d\n", (record_count));
 	printf("uid with max followers %d, total number of uid %d, avg %.3f\n", previous_max_followers, id_count, record_count/(float)id_count);
 	
