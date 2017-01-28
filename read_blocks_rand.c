@@ -47,10 +47,6 @@ int main(int argc, char *atgv[])
 		int id_count = 0;
 		int record_count = 0;
 		while(pointer < records_per_block){
-			if(buffer[pointer].uid1 == 0){
-				pointer++;
-				break;
-			}
 			record_count++;
 			printf("uid1 %d\n", buffer[pointer].uid1);
 			if(current_max_id == -1){
