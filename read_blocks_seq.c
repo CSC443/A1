@@ -5,6 +5,7 @@
 #include "record.h"
 
 int main(int argc, char *atgv[]){
+	printf("read\n");
 	int block_size = atoi(atgv[2]);
 	int records_per_block = block_size/sizeof(Record);
 	FILE *fp_read;
@@ -30,10 +31,17 @@ int main(int argc, char *atgv[]){
 	int previous_max_id = -1;
 	int previous_max_followers = -1;
 	int id_count = 0;
+	int record_count = 0;
 	while(pointer < records_per_block){
 
 		pointer++;
+		if(buffer[pointer].uid1 == 0){
+			continue;
+		}
+		record_count++;
 		printf("uid1 %d\n", buffer[pointer].uid1);
+		
+
 		if(current_max_id == buffer[pointer].uid1){
 			current_max_followers++;
 		}else{
@@ -52,7 +60,7 @@ int main(int argc, char *atgv[]){
     time_spent_ms = (long) (1000 *(t_end.time - t_begin.time)
        + (t_end.millitm - t_begin.millitm));
     printf ("Data rate: %.3f MBPS\n", ((pointer*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
-	printf ("total records: %d\n", (pointer));
+	printf ("total records: %d\n", (record_count));
 	printf("%d, %d\n", previous_max_followers, id_count);
 	
 	fclose (fp_read);

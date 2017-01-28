@@ -81,9 +81,9 @@ void write_buffer_to_disk(Record* buffer, int total_records, int filenum, char* 
 	char fileNumber[sizeof(int) + 1];
 	fileName[0] = '\0'; 
     fileNumber[0] = '\0';
-  
+  	char *attr = strtok(orginal_filename, ".");
     snprintf(fileNumber, sizeof(int), "%d", filenum);
-  	strncpy(fileName, orginal_filename, strlen(orginal_filename) + 1);
+  	strncpy(fileName, attr, strlen(attr) + 1);
     strncat(fileName, fileNumber, strlen(fileNumber));
 
 	fp = fopen(fileName, "wb");
