@@ -59,9 +59,10 @@ int main(int argc, char *atgv[]){
 		pointer++;
 		
 	}
-	if(previous_max_id == -1){
+	if(previous_max_followers < current_max_followers && previous_max_id != current_max_id){
 		previous_max_followers = current_max_followers;
 		previous_max_id = current_max_id;
+		printf("updated uid %d, following %d\n", current_max_id, current_max_followers);
 	}
     ftime(&t_end);
     time_spent_ms = (long) (1000 *(t_end.time - t_begin.time)
