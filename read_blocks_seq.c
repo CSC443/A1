@@ -68,7 +68,7 @@ int main(int argc, char *atgv[]){
        + (t_end.millitm - t_begin.millitm));
     printf ("Data rate: %.3f MBPS\n", ((record_count*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
 	printf ("total records: %d\n", (record_count));
-	printf("uid with max followers %d, total number of uid %d, avg %.3f\n", previous_max_followers, id_count, record_count/(float)id_count);
+	printf("uid %d with max followers %d, total number of uid %d, avg %.3f\n", previous_max_id, previous_max_followers, id_count, record_count/(float)id_count);
 	write_result_to_file("read_block_seq.txt", block_size, ((record_count*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
 	fclose (fp_read);
 	free (buffer);

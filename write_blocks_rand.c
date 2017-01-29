@@ -12,7 +12,9 @@ int main(int argc, char *atgv[])
 	int i = 0;
 
 	FILE *fp_write;
-	
+	struct timeb t_begin, t_end;
+    long time_spent_ms;
+    ftime(&t_begin);
 	if (!(fp_write = fopen (atgv[1] , "rb+" ))){
 		return -1;
 	}
@@ -31,6 +33,11 @@ int main(int argc, char *atgv[])
         fflush (fp_write);
         i++;
     }
+    ftime(&t_end);
+    time_spent_ms = (long) (1000 *(t_end.time - t_begin.time)
+       + (t_end.millitm - t_begin.millitm));
+    printf ("Data rate: %.3f MBPS\n", ((rand_num*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
+	printf ("total records changed: %d\n", (rand_num));
     free (buffer);
 	fclose (fp_write);
 }
