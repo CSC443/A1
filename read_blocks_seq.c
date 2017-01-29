@@ -36,7 +36,7 @@ int main(int argc, char *atgv[]){
 		while(pointer < records_per_block){
 
 			record_count++;
-			printf("uid1 %d   uid2 %d\n", buffer[pointer].uid1, buffer[pointer].uid2);
+			//printf("uid1 %d   uid2 %d\n", buffer[pointer].uid1, buffer[pointer].uid2);
 			if(current_max_id == -1){
 
 				current_max_id = buffer[pointer].uid1;
@@ -69,7 +69,7 @@ int main(int argc, char *atgv[]){
     printf ("Data rate: %.3f MBPS\n", ((record_count*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
 	printf ("total records: %d\n", (record_count));
 	printf("uid with max followers %d, total number of uid %d, avg %.3f\n", previous_max_followers, id_count, record_count/(float)id_count);
-	
+	write_result_to_file("read_block_seq.txt", block_size, ((record_count*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
 	fclose (fp_read);
 	free (buffer);
 }

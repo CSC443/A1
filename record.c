@@ -12,7 +12,6 @@ void csv_to_record(char* filename, char* block_size){
 	char *line;
 	int records_per_block = atoi(block_size) / sizeof(Record);
 	Record *buffer = (Record *) calloc (records_per_block, sizeof (Record));
-	int buffer_pointer = 0;
 	printf("%s\n", filename);
 
 	fp = fopen(filename, "r");
@@ -88,6 +87,16 @@ void write_buffer_to_disk(Record* buffer, int total_records, FILE *fp){
 	}else{
 		return;
 	}
+
+}
+
+void write_result_to_file(char *filename, int block_size, float speed){
+	FILE *fp;
+	if (!(fp = fopen (filename , "a" ))){
+		return;
+	}
+    fprintf(fp, "%d, %.3f\n", block_size, speed);
+    fclose(fp);
 
 }
 

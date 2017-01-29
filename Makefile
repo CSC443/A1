@@ -7,7 +7,7 @@ CFLAGS += -D_FILE_OFFSET_BITS=64
 
 # Source files
 WRITE_BLOCKS_SRC=record.c write_blocks_seq.c 
-READ_BLOCKS_SRC= read_blocks_seq.c
+READ_BLOCKS_SRC= record.c read_blocks_seq.c
 WRITE_LINES = write_lines.c
 READ_RAM_SRC = read_ram_seq.c
 READ_BLOCKS_RAND=read_blocks_rand.c
