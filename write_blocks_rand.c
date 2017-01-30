@@ -21,11 +21,11 @@ int main(int argc, char *atgv[])
 
     fseek(fp_write, 0L, SEEK_END);
 	int file_size = ftell(fp_write);
-	Record *buffer = (Record *) calloc (1, sizeof (Record)) ;
+	Record *buffer = (Record *) calloc (1, sizeof (Record));
 	fseek(fp_write, 0L, SEEK_SET);
     while (i < rand_num){
         int r = rand() % (file_size/sizeof(Record));
-        printf("%d\n", r);
+        //printf("%d\n", r);
         fseek(fp_write, r*sizeof(Record), SEEK_SET);
         buffer[0].uid1 = 11;
         buffer[0].uid2 = 2;

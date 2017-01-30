@@ -30,7 +30,7 @@ int main(int argc, char *atgv[])
 	}
     while (i < rand_num){
         int r = rand() % (file_size/sizeof(Record));
-        printf("%d\n", r);
+        //printf("%d\n", r);
         buffer[r].uid1 = 11;
         buffer[r].uid2 = 2;
         i++;

@@ -70,7 +70,7 @@ int main(int argc, char *atgv[]){
     printf ("Data rate: %.3f MBPS\n", ((pointer*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
 	printf ("total records: %d\n", (pointer));
 	printf("uid %d with max followers %d, total number of uid %d, avg %.3f\n", previous_max_id, previous_max_followers, id_count, pointer/(float)id_count);
-	
+	write_result_to_file("read_ram_seq.txt", 0, ((pointer*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
 	fclose (fp_read);
 	free (buffer);
 }
