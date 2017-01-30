@@ -12,7 +12,6 @@ void csv_to_record(char* filename, char* block_size){
 	char *line;
 	int records_per_block = atoi(block_size) / sizeof(Record);
 	Record *buffer = (Record *) calloc (records_per_block, sizeof (Record));
-	printf("%s\n", filename);
 
 	fp = fopen(filename, "r");
 	if(fp == NULL){
@@ -24,10 +23,7 @@ void csv_to_record(char* filename, char* block_size){
 	if(fp_write == NULL){
 		perror("Error opening file");
 		return;
-	}
-
-	printf("%lu\n", sizeof(Record));
-	
+	}	
 	int file = 0;
 	int i = 0;
 	//Parse the lines in csv file to an array of array chars
@@ -35,12 +31,10 @@ void csv_to_record(char* filename, char* block_size){
     ftime(&t_begin); 
 	while((line = fgets(current_line, MAX_CHARS_PER_LINE, fp)) != NULL){
 		line [strcspn (line, "\r\n")] = '\0';
-		printf("%s\n", line);
 		char *attr = strtok(line, ",");
 		int j = 0;
 		while(attr){
 
-			printf("current attr %s\n", attr);
 			if(j == 0){
 				buffer[i].uid1 = atoi(attr);
 			}else{
@@ -68,9 +62,9 @@ void csv_to_record(char* filename, char* block_size){
 	time_spent_ms = (long) (1000 *(t_end.time - t_begin.time)
      + (t_end.millitm - t_begin.millitm));
 
-	printf ("Data rate: %.3f MBPS\n", ((total_records*sizeof(Record))/(float)time_spent_ms * 1000)/MB);
+	printf ("Data rate: %.3f MBPS\n", ((total_records*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
 	printf("total records: %d\n",(total_records));	
-
+	write_result_to_file("write_block_seq.txt", atoi(block_size), ((total_records*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
 	
 	free(buffer);
 	fclose (fp);

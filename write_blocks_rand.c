@@ -38,6 +38,7 @@ int main(int argc, char *atgv[])
        + (t_end.millitm - t_begin.millitm));
     printf ("Data rate: %.3f MBPS\n", ((rand_num*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
 	printf ("total records changed: %d\n", (rand_num));
+	write_result_to_file("write_block_rand.txt", 0, ((rand_num*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
     free (buffer);
 	fclose (fp_write);
 }
