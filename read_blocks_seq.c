@@ -36,13 +36,10 @@ int main(int argc, char *atgv[]){
 		while(pointer < records_per_block){
 
 			record_count++;
-			//printf("uid1 %d   uid2 %d\n", buffer[pointer].uid1, buffer[pointer].uid2);
 			if(current_max_id == -1){
 
 				current_max_id = buffer[pointer].uid1;
 				current_max_followers = 1;
-				// previous_max_followers = current_max_followers;
-				// previous_max_id = current_max_id;
 				id_count++;
 			}else if(current_max_id == buffer[pointer].uid1){
 				current_max_followers++;
@@ -50,7 +47,6 @@ int main(int argc, char *atgv[]){
 				if(previous_max_followers < current_max_followers && previous_max_id != current_max_id){
 					previous_max_followers = current_max_followers;
 					previous_max_id = current_max_id;
-					//printf("updated uid %d, following %d\n", current_max_id, current_max_followers);
 				}
 				current_max_id = buffer[pointer].uid1;
 				current_max_followers = 1;
@@ -65,11 +61,11 @@ int main(int argc, char *atgv[]){
 	if(previous_max_followers < current_max_followers && previous_max_id != current_max_id){
 		previous_max_followers = current_max_followers;
 		previous_max_id = current_max_id;
-		//printf("updated uid %d, following %d\n", current_max_id, current_max_followers);
 	}
     ftime(&t_end);
     time_spent_ms = (long) (1000 *(t_end.time - t_begin.time)
        + (t_end.millitm - t_begin.millitm));
+    printf("%lu\n", record_count*sizeof(Record));
     printf ("Data rate: %.3f MBPS\n", ((record_count*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
 	printf ("total records: %d\n", (record_count));
 	printf("uid %d with max followers %d, total number of uid %d, avg %.3f\n", previous_max_id, previous_max_followers, id_count, record_count/(float)id_count);

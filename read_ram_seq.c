@@ -22,11 +22,11 @@ int main(int argc, char *atgv[]){
 	
 	
 	/* read records into buffer */
+	
+	int result = fread (buffer, sizeof(Record), records_per_file, fp_read);
 	struct timeb t_begin, t_end;
     long time_spent_ms;
     ftime(&t_begin);
-	int result = fread (buffer, sizeof(Record), records_per_file, fp_read);
-
 	if (result!=records_per_file){
 		return -1;
 	}
@@ -37,13 +37,10 @@ int main(int argc, char *atgv[]){
 	int previous_max_followers = -1;
 	int id_count = 0;
 	while(pointer < records_per_file){
-		//printf("uid1 %d\n", buffer[pointer].uid1);
 		if(current_max_id == -1){
 
 			current_max_id = buffer[pointer].uid1;
 			current_max_followers = 1;
-			// previous_max_followers = current_max_followers;
-			// previous_max_id = current_max_id;
 			id_count++;
 		}else if(current_max_id == buffer[pointer].uid1){
 			current_max_followers++;
@@ -62,7 +59,6 @@ int main(int argc, char *atgv[]){
 	if(previous_max_followers < current_max_followers && previous_max_id != current_max_id){
 		previous_max_followers = current_max_followers;
 		previous_max_id = current_max_id;
-		printf("updated uid %d, following %d\n", current_max_id, current_max_followers);
 	}
     ftime(&t_end);
     time_spent_ms = (long) (1000 *(t_end.time - t_begin.time)

@@ -72,14 +72,24 @@ def read_ram_seq():
     for  i in range(0,9) :
          os.system("./read_ram_seq "+ filenames[i])
 
+def read_blocks_rand():
+    for  i in range(0,9) :
+         os.system("./read_blocks_rand "+ filenames[i] + " " + str(sizes[i]) + " 100")
+
+def read_ram_rand():
+    for  i in range(0,9) :
+         os.system("./read_ram_rand "+ filenames[i] + " 1000")
+
 def write_blocks_rand():
     os.system("./write_blocks_rand " + "data_write1.dat" + " 10000");
 
 def write_ram_rand():
     os.system("./write_ram_rand " + "data_write2.dat" + " 10000");
 
-write_blocks_seq()
+#write_blocks_seq()
 #read_ram_seq()
+#read_blocks_rand()
+read_ram_rand()
 #read_blocks_seq()
 
 #write_blocks_rand()
