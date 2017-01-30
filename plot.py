@@ -10,16 +10,17 @@ def plot_from_file(filename, filename2):
     for line in f:
         line = line.strip('\n')
         x.append(int(line.split(',')[0]))
-        y.append(float(line.split(',')[1]))
+        y.append(float(line.split(',')[1]) * 1000000)
+    y = np.log10(y)
     if(filename2 != ""):
         f2 = open(filename2, "r")
         y2 = []
         for line in f2:
             line = line.strip('\n')
-            y2.append(float(line.split(',')[1]))
+            y2.append(float(line.split(',')[1]) * 1000000)
 
     fig = plt.figure()
-
+    y2 = np.log10(y2)
 
     width = .35
     ind = np.arange(len(y))
@@ -29,8 +30,8 @@ def plot_from_file(filename, filename2):
     plt.xticks(ind + width / 2, x)
 
     fig.autofmt_xdate()
-    plt.xlabel('Block size')
-    plt.ylabel('Read Speed')
+    plt.xlabel('Block size(Bytes)')
+    plt.ylabel('Read Speed(logarithm of BPS)')
     plt.title('Read Speed by primary/secondary storage')
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.15),
           fancybox=True, shadow=True, ncol=5)

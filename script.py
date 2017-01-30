@@ -53,11 +53,11 @@ def write_lines(filename):
          
          
          
-def read_blocks_seq(filename):
+def read_blocks_seq():
     for  i in range(0,9) :
          os.system("./read_blocks_seq "+filenames[i] + " "+ str(sizes[i]))
 
-def read_ram_seq(filename):
+def read_ram_seq():
     for  i in range(0,9) :
          os.system("./read_ram_seq "+filenames[i])
 
@@ -67,7 +67,8 @@ def write_blocks_rand():
 def write_ram_rand():
     os.system("./write_ram_rand " + "data_write2.dat" + " 10000");
 
-read_blocks_seq("")
+read_blocks_seq()
+#31read_ram_seq()
 
 #write_blocks_rand()
 
