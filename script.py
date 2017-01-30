@@ -35,14 +35,22 @@ def plot_exp1():
     
     x=[512,1024,4096,8192,16384,32768,1048576,2097152,4194304]
     fig = plt.figure()
-    ax = fig.add_subplot(111)
-    plt.plot(x,y)
     
-    #plt.axis([0,8000000, 0,60000000])
-    ax.set_xlabel('block sizes in bytes')
-    ax.set_ylabel('writing speed in mbps')
-    ax.set_title('block size vs  wrting speed')
-    plt.show()
+    
+    
+    width = .35
+    ind = np.arange(len(y))
+    plt.bar(ind, y, width=width, color=(0.2588,0.4433,1.0), label="block_size")
+    
+    plt.xticks(ind + width / 2, x)
+    
+    fig.autofmt_xdate()
+    plt.xlabel('Block size')
+    plt.ylabel('Read Speed')
+    plt.title('Read Speed by primary/secondary storage')
+    plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.15),
+    fancybox=True, shadow=True, ncol=5)
+    plt.show()    
          
 
 def write_lines(filename):
