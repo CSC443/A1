@@ -54,8 +54,8 @@ void csv_to_record(char* filename, char* block_size){
 		
 
 	}
-	if(file == 0){
-		write_buffer_to_disk(buffer, total_records, fp_write);
+	if(i < records_per_block){
+		write_buffer_to_disk(buffer, i, fp_write);
 	}
     ftime(&t_end); 
 

@@ -15,6 +15,11 @@ int main(int argc, char *atgv[]){
 	if (!(fp_read = fopen (atgv[1] , "rb" ))){
 		return -1;
 	}
+
+	fseek(fp_read, 0L, SEEK_END);
+	int file_size = ftell(fp_read);
+	fseek(fp_read, 0L, SEEK_SET);
+	printf("%lu\n", file_size/sizeof(Record));
 	
 	/* read records into buffer */
 	struct timeb t_begin, t_end;
@@ -30,12 +35,16 @@ int main(int argc, char *atgv[]){
 	int record_count = 0;
 	while((result = fread (buffer, sizeof(Record), records_per_block, fp_read)) > 0){
 		int pointer = 0;
+		
 		if (result!=records_per_block){
 			records_per_block = result;
+			record_count+=records_per_block;
+		}else{
+			record_count+=records_per_block;
 		}
 		while(pointer < records_per_block){
 
-			record_count++;
+			
 			if(current_max_id == -1){
 
 				current_max_id = buffer[pointer].uid1;
@@ -61,6 +70,7 @@ int main(int argc, char *atgv[]){
 	if(previous_max_followers < current_max_followers && previous_max_id != current_max_id){
 		previous_max_followers = current_max_followers;
 		previous_max_id = current_max_id;
+		id_count++;
 	}
     ftime(&t_end);
     time_spent_ms = (long) (1000 *(t_end.time - t_begin.time)
