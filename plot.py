@@ -17,7 +17,7 @@ def plot_from_file_read(filenames):
             else:
                 x.append(int(line.split(',')[0]))
             y.append(float(line.split(',')[1]) * MB)
-    y = np.log10(y)
+    #y = np.log10(y)
     fig = plt.figure()
 
     width = .35
@@ -34,21 +34,21 @@ def plot_from_file_read(filenames):
     # plt.ylabel('Write Speed(BPS)')
     # plt.title('Write Speed by different block sizes')
 
-    plt.xlabel('Block size(Bytes)')
-    plt.ylabel('Read Speed(log of BPS)')
-    plt.title('Read Speed by primary/secondary storage')
-
     # plt.xlabel('Block size(Bytes)')
-    # plt.ylabel('Write Speed(BPS)')
-    # plt.title('Write Speed by block sizes')
+    # plt.ylabel('Read Speed(log of BPS)')
+    # plt.title('Read Speed by primary/secondary storage')
+
+    plt.xlabel('Block size(Bytes)')
+    plt.ylabel('Write Speed(BPS)')
+    plt.title('Write Speed by block sizes')
 
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.15),
           fancybox=True, shadow=True, ncol=5)
     plt.show()
 
 
-#plot_from_file_read(["write_block_seq.txt", "write_lines.txt"])
-plot_from_file_read(["read_block_seq.txt", "read_ram_seq.txt"])
+plot_from_file_read(["write_block_seq.txt", "write_lines.txt"])
+#plot_from_file_read(["read_block_seq.txt", "read_ram_seq.txt"])
 
 def plot_exp3(filenames):
     y = []
