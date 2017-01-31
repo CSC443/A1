@@ -82,5 +82,6 @@ int main(int argc, char *atgv[]){
 	write_result_to_file("read_block_seq.txt", block_size, ((record_count*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
 	fclose (fp_read);
 	free (buffer);
+	return 0;
 }
 

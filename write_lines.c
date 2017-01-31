@@ -34,6 +34,7 @@ void csv_to_csv(char* filename){
     time_spent_ms = (long) (1000 *(t_end.time - t_begin.time)
        + (t_end.millitm - t_begin.millitm));
     printf ("Data rate: %.3f MBPS\n", (total_size/(float)time_spent_ms * 1000)/(1024*1024)); 
+    write_result_to_file("write_lines.txt", 0, (total_size/(float)time_spent_ms * 1000)/(1024*1024));
 	
 
 }
@@ -41,4 +42,5 @@ void csv_to_csv(char* filename){
 int main(int argc, char *atgv[]){
  	printf("start\n");
  	csv_to_csv(atgv[1]);
+ 	return 0;
  }

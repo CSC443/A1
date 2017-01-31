@@ -22,11 +22,11 @@ int main(int argc, char *atgv[]){
 	
 	
 	/* read records into buffer */
-	
-	int result = fread (buffer, sizeof(Record), records_per_file, fp_read);
 	struct timeb t_begin, t_end;
     long time_spent_ms;
     ftime(&t_begin);
+	int result = fread (buffer, sizeof(Record), records_per_file, fp_read);
+	
 	if (result!=records_per_file){
 		return -1;
 	}
@@ -69,5 +69,6 @@ int main(int argc, char *atgv[]){
 	write_result_to_file("read_ram_seq.txt", 0, ((pointer*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
 	fclose (fp_read);
 	free (buffer);
+	return 0;
 }
 

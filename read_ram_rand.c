@@ -60,8 +60,6 @@ int main(int argc, char *atgv[]){
 
 			current_max_id = buffer[(pointer+r)].uid1;
 			current_max_followers = 1;
-			// previous_max_followers = current_max_followers;
-			// previous_max_id = current_max_id;
 			id_count++;
 		}else if(current_max_id == buffer[(pointer+r)].uid1){
 			current_max_followers++;
@@ -78,7 +76,7 @@ int main(int argc, char *atgv[]){
 		
 	}
 
-	if(previous_max_id == -1){
+	if(previous_max_followers < current_max_followers && previous_max_id != current_max_id){
 		previous_max_followers = current_max_followers;
 		previous_max_id = current_max_id;
 	}
@@ -88,8 +86,9 @@ int main(int argc, char *atgv[]){
     printf ("Data rate: %.3f MBPS\n", ((pointer*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
 	printf ("total records: %d\n", (pointer));
 	printf("uid with max followers %d, total number of uid %d, avg %.3f\n", previous_max_followers, id_count, pointer/(float)id_count);
-	write_result_to_file("read_ram_rand.txt", 0, ((pointer*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
+	write_result_to_file("read_ram_rand.txt", block_size, ((pointer*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
 
 	fclose (fp_read);
 	free (buffer);
+	return 0;
 }

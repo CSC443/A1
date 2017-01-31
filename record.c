@@ -69,6 +69,7 @@ void csv_to_record(char* filename, char* block_size){
 	free(buffer);
 	fclose (fp);
 	fclose (fp_write);
+	return;
 
 }
 

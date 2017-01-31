@@ -43,4 +43,5 @@ int main(int argc, char *atgv[])
 	write_result_to_file("write_ram_rand.txt", 0, ((rand_num*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
     free (buffer);
 	fclose (fp_write);
+	return 0;
 }

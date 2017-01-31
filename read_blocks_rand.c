@@ -32,8 +32,8 @@ int main(int argc, char *atgv[])
     printf("%d\n",file_size);
     int record_count = 0;
     while (i < rand_num){
-        int r = rand() % (file_size/block_size);
-        fseek(fp_read, r*block_size, SEEK_SET);   // seek to the beginning of the file
+        int r = rand() % (file_size/sizeof(Record));
+        fseek(fp_read, r*sizeof(Record), SEEK_SET);
         int result = fread (buffer, sizeof(Record), records_per_block, fp_read);
 
 		if (result!=records_per_block){
@@ -65,10 +65,12 @@ int main(int argc, char *atgv[])
 			}
 			pointer++;
 		}
-		if(previous_max_id == -1){
+		if(previous_max_followers < current_max_followers && previous_max_id != current_max_id){
 			previous_max_followers = current_max_followers;
 			previous_max_id = current_max_id;
+			id_count++;
 		}
+		
         avg+= records_per_block/(float)id_count;
         if(previous_max_followers > max_f_count){
         	max_f_count = previous_max_followers;
@@ -79,6 +81,7 @@ int main(int argc, char *atgv[])
         record_count+=records_per_block;
 
     }
+    printf("%d\n", record_count);
     printf("uid with max followers %d %d, avg %.3f\n", uid_with_max_f, max_f_count, avg/(float)rand_num);
     ftime(&t_end);
     time_spent_ms = (long) (1000 *(t_end.time - t_begin.time)
@@ -89,4 +92,5 @@ int main(int argc, char *atgv[])
 
     free (buffer);
 	fclose (fp_read);
+	return 0;
 }

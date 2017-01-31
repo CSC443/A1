@@ -25,7 +25,6 @@ int main(int argc, char *atgv[])
 	fseek(fp_write, 0L, SEEK_SET);
     while (i < rand_num){
         int r = rand() % (file_size/sizeof(Record));
-        //printf("%d\n", r);
         fseek(fp_write, r*sizeof(Record), SEEK_SET);
         buffer[0].uid1 = 11;
         buffer[0].uid2 = 2;
@@ -41,4 +40,5 @@ int main(int argc, char *atgv[])
 	write_result_to_file("write_block_rand.txt", 0, ((rand_num*sizeof(Record))/(float)time_spent_ms * 1000)/(1024*1024));
     free (buffer);
 	fclose (fp_write);
+	return 0;
 }
