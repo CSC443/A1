@@ -14,10 +14,10 @@ int main(int argc, char *atgv[]){
 		return -1;
 	}
 
+	
 	fseek(fp_read, 0L, SEEK_END);
 	int file_size = ftell(fp_read);
 	fseek(fp_read, 0L, SEEK_SET);
-	
 	printf("%d\n", file_size);
     int total_records = file_size/sizeof(Record);
     int records_per_block = block_size/sizeof(Record);
@@ -25,15 +25,17 @@ int main(int argc, char *atgv[]){
     
     Record * buffer = (Record *) calloc (total_records, sizeof (Record)) ;
 
+    
+    
+	int result = fread (buffer, sizeof(Record), total_records, fp_read);
+	if (result!=total_records){
+		return -1;
+	}
     struct timeb t_begin, t_end;
     long time_spent_ms;
     ftime(&t_begin);
     
-	int result = fread (buffer, sizeof(Record), total_records, fp_read);
-    
-    if (result!=total_records){
-		return -1;
-	}    
+        
     
     int avg = 0;
 	int uid_with_max_f = 0;

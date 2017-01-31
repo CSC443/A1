@@ -12,9 +12,7 @@ int main(int argc, char *atgv[])
 	int i = 0;
 
 	FILE *fp_write;
-	struct timeb t_begin, t_end;
-    long time_spent_ms;
-    ftime(&t_begin);
+	
 	if (!(fp_write = fopen (atgv[1] , "r+" ))){
 		return -1;
 	}
@@ -28,6 +26,10 @@ int main(int argc, char *atgv[])
 	if(result != records_per_file){
 		return -1;
 	}
+
+	struct timeb t_begin, t_end;
+    long time_spent_ms;
+    ftime(&t_begin);
     while (i < rand_num){
         int r = rand() % (file_size/sizeof(Record));
         //printf("%d\n", r);
