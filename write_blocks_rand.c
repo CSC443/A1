@@ -21,7 +21,7 @@ int main(int argc, char *atgv[])
 	int file_size = ftell(fp_write);
 	Record *buffer = (Record *) calloc (1, sizeof (Record));
 	fseek(fp_write, 0L, SEEK_SET);
-	
+
 	struct timeb t_begin, t_end;
     long time_spent_ms;
     ftime(&t_begin);
@@ -31,7 +31,6 @@ int main(int argc, char *atgv[])
         buffer[0].uid1 = 11;
         buffer[0].uid2 = 2;
         fwrite(buffer, sizeof(Record), 1, fp_write);
-        //fflush (fp_write);
         i++;
     }
     ftime(&t_end);
