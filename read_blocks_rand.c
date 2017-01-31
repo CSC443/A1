@@ -35,7 +35,7 @@ int main(int argc, char *atgv[])
         int r = rand() % (file_size/sizeof(Record));
         fseek(fp_read, r*sizeof(Record), SEEK_SET);
         int result = fread (buffer, sizeof(Record), records_per_block, fp_read);
-
+        records_per_block = block_size/sizeof(Record);
 		if (result!=records_per_block){
 			records_per_block = result;
 		}

@@ -35,7 +35,7 @@ int main(int argc, char *atgv[]){
 	int record_count = 0;
 	while((result = fread (buffer, sizeof(Record), records_per_block, fp_read)) > 0){
 		int pointer = 0;
-		
+		records_per_block = block_size/sizeof(Record);
 		if (result!=records_per_block){
 			records_per_block = result;
 			record_count+=records_per_block;

@@ -44,7 +44,7 @@ int main(int argc, char *atgv[]){
     int i = 0;
     while (i < rand_num){
         int r = rand() % (file_size/sizeof(Record));
-
+        records_per_block = block_size/sizeof(Record);
         if ((total_records - r) < records_per_block ){
         	records_per_block = total_records - r ;
    		}
