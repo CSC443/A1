@@ -98,6 +98,7 @@ def plot_from_exp3(filenames):
     result[3].set_color('y')
     result[4].set_color('m')
     result[5].set_color('c')
+    result[6].set_color('k')
 
     plt.xticks(ind + width / 2, x)
 
@@ -110,4 +111,4 @@ def plot_from_exp3(filenames):
 
     plt.show()
 
-plot_from_exp3(["read_block_seq.txt", "read_block_rand.txt", "read_ram_rand.txt", "read_ram_seq.txt", "write_ram_rand.txt", "write_block_rand.txt"])
+plot_from_exp3(["read_block_seq.txt", "read_block_rand.txt", "read_ram_rand.txt", "read_ram_seq.txt", "write_ram_rand.txt", "write_block_rand.txt", "write_block_seq_opt.txt"])
