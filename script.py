@@ -66,40 +66,40 @@ def write_lines(filename):
          
          
 def read_blocks_seq():
-    #for i in range(0,9) :
+    for i in range(0,9) :
         # file = ""
         # if (i % 2 == 0):
         #     file = filenames[0]
         # else:
         #     file = filenames[1]
-    os.system("./read_blocks_seq "+ filenames[0] + " "+ str(16 * KB))
+        os.system("./read_blocks_seq "+ filenames[i] + " "+ str(16 * KB))
 
 def read_ram_seq():
-    # for  i in range(0,9) :
+    for  i in range(0,9) :
     #     file = ""
     #     if (i % 2 == 0):
     #         file = filenames[0]
     #     else:
     #         file = filenames[1]
-    os.system("./read_ram_seq "+ filenames[1])
+        os.system("./read_ram_seq "+ filenames[i])
 
 def read_blocks_rand():
-    # for  i in range(0,9):
+    for  i in range(0,9):
     #     file = ""
     #     if (i % 2 == 0):
     #         file = big_files[0]
     #     else:
     #         file = big_files[1]
-    os.system("./read_blocks_rand "+ filenames[2] + " " + str(16 * KB) + " 100")
+        os.system("./read_blocks_rand "+ filenames[i] + " " + str(16 * KB) + " 100")
 
 def read_ram_rand():
-    # for i in range(0, 9):
+    for i in range(0, 9):
     #     file = ""
     #     if (i % 2 == 0):
     #         file = filenames[0]
     #     else:
     #         file = filenames[1]
-    os.system("./read_ram_rand "+ filenames[3] + " " + str(16 * KB) + " 100")
+        os.system("./read_ram_rand "+ filenames[i] + " " + str(16 * KB) + " 100")
 
 def write_blocks_rand():
     os.system("./write_blocks_rand " + "data_write1.dat" + " 10000")
@@ -115,6 +115,6 @@ read_blocks_rand()
 read_ram_rand()
 read_blocks_seq()
 
-write_blocks_rand()
-
-write_ram_rand()
+# write_blocks_rand()
+#
+# write_ram_rand()
