@@ -27,9 +27,11 @@ int main(int argc, char *atgv[]){
 	struct timeb t_begin, t_end;
     long time_spent_ms;
     ftime(&t_begin);
+
 	if (result!=records_per_file){
 		return -1;
 	}
+	
 	int pointer = 0;
 	int current_max_id = -1;
 	int current_max_followers = 0;

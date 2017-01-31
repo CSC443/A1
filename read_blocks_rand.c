@@ -19,8 +19,11 @@ int main(int argc, char *atgv[])
 	if (!(fp_read = fopen (atgv[1] , "rb" ))){
 		return -1;
 	}
+	//find the size of the file
 	fseek(fp_read, 0L, SEEK_END);
 	int file_size = ftell(fp_read);
+
+	//Reset the pointer to begining of the file
 	fseek(fp_read, 0L, SEEK_SET);
 
 	int avg = 0;
@@ -29,13 +32,17 @@ int main(int argc, char *atgv[])
 	struct timeb t_begin, t_end;
     long time_spent_ms;
     ftime(&t_begin);
-    printf("%d\n",file_size);
     int record_count = 0;
     while (i < rand_num){
         int r = rand() % (file_size/sizeof(Record));
+
+        //Find the position to read the block from the file
         fseek(fp_read, r*sizeof(Record), SEEK_SET);
         int result = fread (buffer, sizeof(Record), records_per_block, fp_read);
+
         records_per_block = block_size/sizeof(Record);
+
+        //Set records to read per block if the total records is less than a block
 		if (result!=records_per_block){
 			records_per_block = result;
 		}
@@ -71,6 +78,7 @@ int main(int argc, char *atgv[])
 			id_count++;
 		}
 		
+		//add the avg from each sample to calcuate avg for data.
         avg+= records_per_block/(float)id_count;
         if(previous_max_followers > max_f_count){
         	max_f_count = previous_max_followers;

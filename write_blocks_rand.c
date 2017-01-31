@@ -27,6 +27,7 @@ int main(int argc, char *atgv[])
     ftime(&t_begin);
     while (i < rand_num){
         int r = rand() % (file_size/sizeof(Record));
+        //find the position to overwrite the data
         fseek(fp_write, r*sizeof(Record), SEEK_SET);
         buffer[0].uid1 = 11;
         buffer[0].uid2 = 2;

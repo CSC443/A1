@@ -22,6 +22,8 @@ int main(int argc, char *atgv[])
 	int records_per_file = file_size/sizeof(Record);
 	Record *buffer = (Record *) calloc (records_per_file, sizeof (Record)) ;
 	fseek(fp_write, 0L, SEEK_SET);
+
+	//load all records into memory
 	int result = fread (buffer, sizeof(Record), records_per_file, fp_write);
 	if(result != records_per_file){
 		return -1;
@@ -32,7 +34,6 @@ int main(int argc, char *atgv[])
     ftime(&t_begin);
     while (i < rand_num){
         int r = rand() % (file_size/sizeof(Record));
-        //printf("%d\n", r);
         buffer[r].uid1 = 11;
         buffer[r].uid2 = 2;
         i++;

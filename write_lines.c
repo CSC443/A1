@@ -4,7 +4,6 @@
 #include <sys/timeb.h>
 #include "record.h"
 
-//void csv_to_csv(char* filename);
 
 void csv_to_csv(char* filename){
 	FILE *fp, *output;
@@ -40,7 +39,6 @@ void csv_to_csv(char* filename){
 }
 
 int main(int argc, char *atgv[]){
- 	printf("start\n");
  	csv_to_csv(atgv[1]);
  	return 0;
  }

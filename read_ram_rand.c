@@ -14,41 +14,44 @@ int main(int argc, char *atgv[]){
 		return -1;
 	}
 
-	
+	//find out the size of the file
 	fseek(fp_read, 0L, SEEK_END);
 	int file_size = ftell(fp_read);
+
+	//reset the pointer to begining of the file
 	fseek(fp_read, 0L, SEEK_SET);
-	printf("%d\n", file_size);
+
     int total_records = file_size/sizeof(Record);
     int records_per_block = block_size/sizeof(Record);
-    
     
     Record * buffer = (Record *) calloc (total_records, sizeof (Record)) ;
 
     
-    
+    //load all records to memory
 	int result = fread (buffer, sizeof(Record), total_records, fp_read);
+
 	if (result!=total_records){
 		return -1;
 	}
+
     struct timeb t_begin, t_end;
     long time_spent_ms;
     ftime(&t_begin);
     
         
-    
     int avg = 0;
 	int uid_with_max_f = 0;
 	int max_f_count = 0;
     int record_count = 0;
+
     int i = 0;
-    printf("%d\n", total_records);
     while (i < rand_num){
         int r = rand() % (file_size/sizeof(Record));
 
         records_per_block = block_size/sizeof(Record);
+
+        //reset records_per_block if records is less than a block.
         if ((total_records - r) < records_per_block ){
-        	printf("%d\n", total_records - r);
         	records_per_block = total_records - r ;
    		}
 
@@ -82,7 +85,8 @@ int main(int argc, char *atgv[]){
 			previous_max_id = current_max_id;
 			id_count++;
 		}
-		
+
+		//add the avg from each sample to calcuate avg for data.
         avg+= records_per_block/(float)id_count;
         if(previous_max_followers > max_f_count){
         	max_f_count = previous_max_followers;
@@ -93,7 +97,6 @@ int main(int argc, char *atgv[]){
         record_count+=records_per_block;
 
     }
-    printf("%d\n", i);
     ftime(&t_end);
     time_spent_ms = (long) (1000 *(t_end.time - t_begin.time)
        + (t_end.millitm - t_begin.millitm));

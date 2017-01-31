@@ -12,20 +12,23 @@ void csv_to_record(char* filename, char* block_size){
 	char *line;
 	int records_per_block = atoi(block_size) / sizeof(Record);
 	Record *buffer = (Record *) calloc (records_per_block, sizeof (Record));
-
+	//open  csv file to read
 	fp = fopen(filename, "r");
 	if(fp == NULL){
 		perror("Error opening file");
 		return;
 	}
 
+	//open dat file to write 
 	fp_write = fopen("data2.dat", "wb");
 	if(fp_write == NULL){
 		perror("Error opening file");
 		return;
 	}	
-	int file = 0;
+
+	//track number of records have been converted in each block cycle.
 	int i = 0;
+
 	//Parse the lines in csv file to an array of array chars
 	int total_records = 0;
     ftime(&t_begin); 
@@ -45,18 +48,21 @@ void csv_to_record(char* filename, char* block_size){
 		}
 		i++;
 		total_records++;
+		
+		//When buffer is full, write to disk
 		if(i == records_per_block){
 			write_buffer_to_disk(buffer, records_per_block, fp_write);
-			file++;
 			i = 0;
 
-		}
-		
+		}	
 
 	}
+
+	//When buffer is smaller than block size after covert all the record.
 	if(i < records_per_block){
 		write_buffer_to_disk(buffer, i, fp_write);
 	}
+
     ftime(&t_end); 
 
 	time_spent_ms = (long) (1000 *(t_end.time - t_begin.time)
