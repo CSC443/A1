@@ -105,7 +105,7 @@ def plot_from_exp2_2(filenames):
     plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
     plt.show()
 
-plot_from_exp2_2(["read_block_seq.txt", "read_block_rand.txt", "read_ram_rand.txt", "read_ram_seq.txt"])
+#plot_from_exp2_2(["read_block_seq.txt", "read_block_rand.txt", "read_ram_rand.txt", "read_ram_seq.txt"])
 
 
 def plot_from_exp3(filenames):
@@ -175,4 +175,4 @@ def plot_from_exp3(filenames):
     plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
     plt.show()
 
-#plot_from_exp3(["read_block_seq.txt", "read_block_rand.txt", "read_ram_rand.txt", "read_ram_seq.txt", "write_ram_rand.txt", "write_block_rand.txt"])
+plot_from_exp3(["read_block_seq.txt", "read_block_rand.txt", "read_ram_rand.txt", "read_ram_seq.txt", "write_ram_rand.txt", "write_block_rand.txt"])

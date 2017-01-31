@@ -42,10 +42,13 @@ int main(int argc, char *atgv[]){
 	int max_f_count = 0;
     int record_count = 0;
     int i = 0;
+    printf("%d\n", total_records);
     while (i < rand_num){
         int r = rand() % (file_size/sizeof(Record));
+
         records_per_block = block_size/sizeof(Record);
         if ((total_records - r) < records_per_block ){
+        	printf("%d\n", total_records - r);
         	records_per_block = total_records - r ;
    		}
 
@@ -90,7 +93,7 @@ int main(int argc, char *atgv[]){
         record_count+=records_per_block;
 
     }
-
+    printf("%d\n", i);
     ftime(&t_end);
     time_spent_ms = (long) (1000 *(t_end.time - t_begin.time)
        + (t_end.millitm - t_begin.millitm));
