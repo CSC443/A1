@@ -12,9 +12,7 @@ int main(int argc, char *atgv[])
 	int i = 0;
 
 	FILE *fp_write;
-	struct timeb t_begin, t_end;
-    long time_spent_ms;
-    ftime(&t_begin);
+	
 	if (!(fp_write = fopen (atgv[1] , "rb+" ))){
 		return -1;
 	}
@@ -23,13 +21,17 @@ int main(int argc, char *atgv[])
 	int file_size = ftell(fp_write);
 	Record *buffer = (Record *) calloc (1, sizeof (Record));
 	fseek(fp_write, 0L, SEEK_SET);
+	
+	struct timeb t_begin, t_end;
+    long time_spent_ms;
+    ftime(&t_begin);
     while (i < rand_num){
         int r = rand() % (file_size/sizeof(Record));
         fseek(fp_write, r*sizeof(Record), SEEK_SET);
         buffer[0].uid1 = 11;
         buffer[0].uid2 = 2;
         fwrite(buffer, sizeof(Record), 1, fp_write);
-        fflush (fp_write);
+        //fflush (fp_write);
         i++;
     }
     ftime(&t_end);
